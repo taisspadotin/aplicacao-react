@@ -6,39 +6,23 @@ import Aplicacao from '../pages/aplicacao';
 import { isAuthenticated } from "../services/auth";
 
 
-/*const PrivateRoute = ({ component: Component, ...rest }) => (
-  <Route
-    {...rest}
-    render={props =>
-      isAuthenticated() ? (
-        <Route path="/cadastro" component={Cadastro} />
-      ) : (
-        <Redirect to={{ pathname: "/login", state: { from: props.location } }} />
-      )
-    }
-  />
-);
-*/
-
 class Main extends Component{
 	render(){
 		let rotasPrivada = '';
 		if(isAuthenticated()){
 			rotasPrivada = 
 			<>
-				{/*<Route exact path="/" component={Index} />*/}
-				<Route path="/cadastro" component={Cadastro} />
-				
-			</>;
+				<Route path="/aplicacao" component={Aplicacao} />
+		</>;
 		}else{
-			rotasPrivada = <Redirect to="/login"/>;
+			rotasPrivada = <Redirect to="/"/>;
 		}
 		
 		return(
 		<BrowserRouter>
 			<Switch>
 				<Route exact path="/" component={Login}/>
-				<Route path="/aplicacao" component={Aplicacao} />
+				<Route path="/cadastro" component={Cadastro} />
 				{rotasPrivada}
 				<Route path="*" component={() => <h1>Page not found</h1>} />
 			</Switch>

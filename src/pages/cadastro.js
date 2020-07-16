@@ -51,12 +51,8 @@ class Cadastro extends Component{
 	}
 
 	validar = ()  => {
-		const {userValue, emailValue, passwordValue} = this.state;
-		if(userValue === ''){
-			this.setState({tituloModal:'Erro', corpoModal:'Preencha o usuário', modal: true});
-			return false;
-		}
-		else if(emailValue === ''){
+		const {emailValue, passwordValue} = this.state;
+		if(emailValue === ''){
 			this.setState({tituloModal:'Erro', corpoModal:'Preencha o email', modal: true});
 			return false;
 		}
@@ -70,12 +66,11 @@ class Cadastro extends Component{
 	}
 
 	salvar = () => {
-		const {userValue, emailValue, passwordValue} = this.state;
+		const {emailValue, passwordValue} = this.state;
 		if(this.validar()){
 			let data = [];
 			let info = {};
 
-			info['user'] = userValue;
 			info['email'] = emailValue;
 			info['password'] = passwordValue;
 			data.push(info);
@@ -89,7 +84,7 @@ class Cadastro extends Component{
 			this.props.showTable(true);
 			//console.log(this.state.valores);
 			//this.props.showTable(true);
-			alert('teste');
+			
 			let rd = <Redirect to="/"/>;
 			this.setState({rd});
 		}
@@ -98,7 +93,7 @@ class Cadastro extends Component{
 
 
 	render(){
-	const {userValue, emailValue, passwordValue} = this.state;
+	const {emailValue, passwordValue} = this.state;
 	let icone = '';
     if(this.state.type === "password")
     {
@@ -113,42 +108,42 @@ class Cadastro extends Component{
 			{this.state.rd}
 			<br/>
 				<div className="conteudo">
-					<Row>
-						<Col>
-							<h1>Cadastre-se</h1>
-						</Col>
-					</Row>
+					<div className="conteudo-1"></div>
+					<div className="conteudo-2">
+						<div className="cadastro-content" align="center">	
+						
+						<Row>
+							<Col>
+								<h1>Cadastre-se</h1>
+							</Col>
+						</Row>
 
-					<Row>
-						<Col>
-							<label>Usuário</label>
-							<input type="text" ref={this.refUser} name='userValue' onChange={this.inputChange} value={userValue}/>
-						</Col>
-						<Col>
-							<label>Email</label>
-							<input type="email" ref={this.refEmail} name='emailValue' onChange={this.inputChange} value={emailValue}/>
-						</Col>
-					</Row>
+						<Row>
+							<Col align="left">
+								<label>Email</label>
+								<input type="email" placeholder="user@mail.com" ref={this.refEmail} name='emailValue' onChange={this.inputChange} value={emailValue}/>
+							</Col>
+						</Row>
 
-					<Row>
-						<Col>
-							<label>Senha</label>
-							<div className="form-group">
-								<input type={this.state.type} ref={this.refPassword} name='passwordValue' onChange={this.inputChange} value={passwordValue}/>
-								 {icone}
-							</div>
-						</Col>
-					</Row>
+						<Row>
+							<Col align="left">
+								<label>Senha</label>
+								<div className="form-group">
+									<input type={this.state.type} ref={this.refPassword} name='passwordValue' onChange={this.inputChange} value={passwordValue}/>
+									 {icone}
+								</div>
+							</Col>
+						</Row>
 
-					<Row align="center" style={{marginTop: '50px'}}>
-						<Col>
-							<button className="btn" onClick={()=>this.salvar()}>
-							Salvar
-							</button>
-							<Link to="/">teste</Link>
-						</Col>
-					</Row>
-
+						<Row align="center" style={{marginTop: '50px'}}>
+							<Col>
+								<button className="btn btn-cadastro" onClick={()=>this.salvar()}>
+								Salvar
+								</button>
+							</Col>
+						</Row>
+						</div>
+					</div>
 				</div>
 				<Modal show={this.state.modal} onHide={()=>this.handleClose()}>
 		        <Modal.Header closeButton>

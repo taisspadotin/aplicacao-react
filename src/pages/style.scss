@@ -1,5 +1,5 @@
 $cor1: #913230;
-$cor2: #ecaf3a;
+$cor2: #66add7;
 
 @mixin font-title{
 	/*font-family: 'Liu Jian Mao Cao', cursive;*/
@@ -36,7 +36,7 @@ $cor2: #ecaf3a;
 	align-items: center;
 	justify-content:center;
 	.login-1{
-		background: url("../img/login.jpg");
+		background: url("../img/fundo.jpg");
 		height: 100%;
 		width:50%;
 		background-repeat: no-repeat;
@@ -122,13 +122,53 @@ $cor2: #ecaf3a;
 .cadastro{
 	
 	min-height: 100vh;
-	background-image: linear-gradient( to right, #fff 72%, darken($cor1, 10%) 25%, darken($cor1, 10%) 60%); 
+	/*background-image: linear-gradient( to right, #fff 72%, darken($cor1, 10%) 25%, darken($cor1, 10%) 60%); */
 
+	height: 100vh;
+	display: flex;
 	.conteudo{
 		width: 100%;
-		
 		margin: 0;
-		padding: 20px;
+		height: 100vh;
+		display: flex;
+		align-items: center;
+		justify-content:center;
+		.conteudo-1{
+			background: url("../img/login.jpg");
+			height: 100%;
+			width:50%;
+			background-repeat: no-repeat;
+			background-size: cover;
+			@media only screen and (max-width: 992px) {
+				width:10%;
+			}
+		}
+		.conteudo-2{
+			background: #fff;
+			width:50%;
+			display: flex;
+			align-items: center;
+			justify-content:center;
+			@media only screen and (max-width: 992px) {
+				width:90%;
+			}
+			.btn-cadastro{
+				width: 100%;
+				height: 50px;
+				text-transform: uppercase;
+				height: 45px;
+				border-radius: 5px;
+				@include font-body;
+				font-size:0.9em;
+				font-weight: 600;
+				
+			}
+		}
+		.cadastro-content{
+			width: 77%;
+				
+		}
+
 		h1{
 			 @include font-title;
 			 letter-spacing: 0.168em;
@@ -159,6 +199,7 @@ $cor2: #ecaf3a;
 	color: #20232a;
 	min-width: 180px;
 	margin-right: 5px;
+	margin-top: 5px;
 	&:hover{
 		background: darken($cor2, 10%);
 	}
@@ -167,6 +208,7 @@ $cor2: #ecaf3a;
 label{
 	color: #20232a;
 	@include font-body;
+	font-size: 1rem;
 }
 
 
@@ -219,8 +261,13 @@ label{
 		min-height: 100vh;
 		width: 100%;
 		padding: 20px;
-		background-image: linear-gradient( to right, #fff 72%, lighten($cor2, 10%) 25%, lighten($cor2, 10%) 60%); 
-
+		padding-left: 60px;
+		padding-right: 60px;
+		background-image: linear-gradient( to right, #fff 72%, lighten($cor2, 30%) 25%, lighten($cor2, 30%) 60%); 
+		@media only screen and (max-width: 992px) {
+			padding-left: 10px;
+			padding-right: 10px;
+		}
 		h1{
 		 @include font-title;
 		 letter-spacing: 0.168em;

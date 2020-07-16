@@ -150,7 +150,7 @@ export default class Aplicacao extends Component{
 		if(registros.length < 1){
 			dados = <Message negative style={{textAlign:'center'}}>
 				<Message.Header>Nenhum registro encontrado!</Message.Header>
-				<p>Verifique sua conexão com o banco</p>
+				<p>Insira um novo registro</p>
 			</Message>;
 		}
 		else{
@@ -180,6 +180,7 @@ export default class Aplicacao extends Component{
 				<div className="aplicacao">
 				<Header/>
 					<div className="conteudo">
+						
 						<Row>
 							<Col>
 								<label>ID:</label>		
@@ -191,7 +192,7 @@ export default class Aplicacao extends Component{
 							</Col>
 						</Row>
 						<br/>
-						<Row>
+						<Row className="mt-4">
 							<Col align="center">
 								<button className="btn" onClick={()=>this.novo()}>Novo</button>
 								<button className="btn" onClick={()=>this.salvar()}>Salvar</button>
@@ -199,7 +200,7 @@ export default class Aplicacao extends Component{
 								<button className="btn" onClick={()=>this.excluir()}>Excluir</button>
 							</Col>
 						</Row>
-						<br/>
+						<br/><br/>
 						{dados}
 						
 					</div>

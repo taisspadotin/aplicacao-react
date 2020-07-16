@@ -9,7 +9,7 @@ class Header extends Component{
 	state = {}
 	sair = () =>{
 		logout();
-		return <Route patch="/login"/>;
+		return <Route patch="/"/>;
 	}
 
    
@@ -20,7 +20,7 @@ class Header extends Component{
 		  <Navbar.Toggle aria-controls="responsive-navbar-nav" />
 		  <Navbar.Collapse  id="responsive-navbar-nav" className="conteudo-nav">
 			<Nav  className="mr-auto">
-			  <LinkContainer to="/login"><button className="btn-sair" onClick={()=>this.sair()}>Sair</button></LinkContainer>
+			  <LinkContainer><button className="btn-sair" onClick={()=>this.sair()}>Sair</button></LinkContainer>
 			</Nav>
 		  </Navbar.Collapse>
 		</Navbar>

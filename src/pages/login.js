@@ -6,10 +6,25 @@ import {Modal, Button} from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { clickButton, showTable, GuardaDados} from '../actions';
-
+import {Redirect} from 'react-router-dom';
 
 class Login extends Component{
-	
+	state = {
+		emailValue: '',
+		senhaValue: '',
+		modal: false,
+		tituloModal: '',
+		corpoModal: '',
+		redir: ''
+	};
+
+	random32bit = () => {
+	  let u = new Uint32Array(1);
+	  window.crypto.getRandomValues(u);
+	  let str = u[0].toString(16).toUpperCase();
+	  return '00000000'.slice(str.length) + str;
+	}
+
 	login = () =>{
 		const {emailValue, senhaValue} = this.state;
 
@@ -17,9 +32,7 @@ class Login extends Component{
 			email: this.state.emailValue,
 			senha: this.state.senhaValue
 		};
-		/*console.log('redux');
-		console.log(this.props.dados);*/
-
+		
 		if(emailValue === ''){
 			this.setState({tituloModal:'Erro', corpoModal:'Preencha o email', modal: true});
 		}
@@ -29,10 +42,11 @@ class Login extends Component{
 		else{
             
         	let dados = this.props.dados;
-        	/*console.log(dados);
-        	console.log(dados[0].email);*/
-			if(dados[0].email === emailValue && dados[0].password === senhaValue){
-				alert('logado');
+        	if(dados[0].email === emailValue && dados[0].password === senhaValue){
+				let token = this.random32bit();
+				realizaLogin(token);
+				let redir = <Redirect to="/aplicacao"/>
+				this.setState({redir});
 			}
 			/*fetch('https://api-cadastro-cliente.000webhostapp.com/usuarios?login=1', {
 				method: 'POST',
@@ -56,14 +70,6 @@ class Login extends Component{
 		}
 		
 	}
-	state = {
-		emailValue: '',
-		senhaValue: '',
-		modal: false,
-		tituloModal: '',
-		corpoModal: ''
-	};
-	
 	inputChange = event => {
 	 const nome = event.target.name;
      this.setState({
@@ -76,9 +82,10 @@ class Login extends Component{
 	}
 
 	render(){
-		const {emailValue, senhaValue} = this.state;
+		const {emailValue, senhaValue, redir} = this.state;
 		return(
 			<>
+			{redir}
 				<div className="login">
 					<div className="login-1"></div>
 					<div className="login-2">
