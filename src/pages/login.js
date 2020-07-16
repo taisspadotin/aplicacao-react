@@ -3,41 +3,38 @@ import './style.scss';
 //import api from '../../api';
 import { realizaLogin } from "../services/auth";
 import {Modal, Button} from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { clickButton, showTable, GuardaDados} from '../actions';
+
 
 class Login extends Component{
 	
 	login = () =>{
+		const {emailValue, senhaValue} = this.state;
+
 		const enviar = {
 			email: this.state.emailValue,
 			senha: this.state.senhaValue
 		};
-		if(enviar.email === ''){
+		/*console.log('redux');
+		console.log(this.props.dados);*/
+
+		if(emailValue === ''){
 			this.setState({tituloModal:'Erro', corpoModal:'Preencha o email', modal: true});
 		}
-		else if(enviar.senha === ''){
+		else if(senhaValue === ''){
 			this.setState({tituloModal:'Erro', corpoModal:'Preencha a senha', modal: true});
 		}
 		else{
             
-        	var raw = JSON.stringify(enviar);
-			/**
-			var myHeaders = new Headers();
-			myHeaders.append("Content-Type", "application/json");
-
-			var raw = JSON.stringify(enviar);
-			var requestOptions = {
-				method: 'POST',
-				headers: myHeaders,
-				body: raw,
-				redirect: 'follow'
-			};
-			fetch('https://api-cadastro-cliente.000webhostapp.com/usuarios?login=1', requestOptions)
-			.then(response => response.text())
-			.then(result=>console.log(result))
-			.catch(error=>console.log(error));
-			*/
-			const resp = '';
-			fetch('https://api-cadastro-cliente.000webhostapp.com/usuarios?login=1', {
+        	let dados = this.props.dados;
+        	/*console.log(dados);
+        	console.log(dados[0].email);*/
+			if(dados[0].email === emailValue && dados[0].password === senhaValue){
+				alert('logado');
+			}
+			/*fetch('https://api-cadastro-cliente.000webhostapp.com/usuarios?login=1', {
 				method: 'POST',
 				body: raw,
 			})
@@ -55,11 +52,7 @@ class Login extends Component{
 					 this.setState({tituloModal:'Erro', corpoModal:resp.mensagem, modal: true});
 				 }
 			});
-        
-
-           //verificar se a pessoa logou
-			
-			
+        */
 		}
 		
 	}
@@ -117,4 +110,14 @@ class Login extends Component{
 		)
 	}
 }
-export default Login;
+
+const mapStateToProps = store => ({
+  newValue: store.clickState.newValue,
+  showTb:   store.TableState.showTb,
+  dados:    store.TableState.dados
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ clickButton, showTable, GuardaDados}, dispatch);
+  
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

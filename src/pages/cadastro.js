@@ -2,6 +2,7 @@ import React ,{ Component} from 'react';
 import Header from '../components/header';
 import {Row, Col, Modal, Button} from 'react-bootstrap';
 import {Icon} from 'semantic-ui-react';
+import {Link, Redirect} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { clickButton, showTable, GuardaDados} from '../actions';
@@ -24,7 +25,8 @@ class Cadastro extends Component{
 		tituloModal: '',
 		corpoModal: '',
 		reload: false,
-		redir: 0
+		redir: 0,
+		rd: ''
 	};
 	
 	inputChange = event => {
@@ -88,6 +90,8 @@ class Cadastro extends Component{
 			//console.log(this.state.valores);
 			//this.props.showTable(true);
 			alert('teste');
+			let rd = <Redirect to="/"/>;
+			this.setState({rd});
 		}
 		
 	}
@@ -106,6 +110,7 @@ class Cadastro extends Component{
 
 		return(
 			<div className="cadastro">
+			{this.state.rd}
 			<br/>
 				<div className="conteudo">
 					<Row>
@@ -128,7 +133,7 @@ class Cadastro extends Component{
 					<Row>
 						<Col>
 							<label>Senha</label>
-							<div class="form-group">
+							<div className="form-group">
 								<input type={this.state.type} ref={this.refPassword} name='passwordValue' onChange={this.inputChange} value={passwordValue}/>
 								 {icone}
 							</div>
@@ -140,6 +145,7 @@ class Cadastro extends Component{
 							<button className="btn" onClick={()=>this.salvar()}>
 							Salvar
 							</button>
+							<Link to="/">teste</Link>
 						</Col>
 					</Row>
 
@@ -153,6 +159,7 @@ class Cadastro extends Component{
 		          <Button onClick={()=>this.handleClose()}>
 		            Fechar
 		          </Button>
+
 		        </Modal.Footer>
 		     </Modal>
 			</div>

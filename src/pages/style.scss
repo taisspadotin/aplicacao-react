@@ -211,3 +211,29 @@ label{
     }
     
 }
+
+.aplicacao{
+	.conteudo{
+		margin: 0;
+		min-height: 100vh;
+		width: 100%;
+		padding: 20px;
+		background-image: linear-gradient( to right, #fff 72%, lighten($cor2, 10%) 25%, lighten($cor2, 10%) 60%); 
+
+		h1{
+		 @include font-title;
+		 letter-spacing: 0.168em;
+		 font-size:1.5em;
+		 margin-bottom: 50px;
+		}
+		input[type=text]{
+			@include inputs;
+		}
+		input[type=email]{
+			@include inputs;	
+		}
+		input[type=password]{
+			@include inputs;	
+		}
+	}	
+}

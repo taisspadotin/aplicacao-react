@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import {Switch, Route, Redirect, BrowserRouter} from 'react-router-dom';
 import Login from '../pages/login';
 import Cadastro from '../pages/cadastro';
+import Aplicacao from '../pages/aplicacao';
 import { isAuthenticated } from "../services/auth";
 
 
@@ -37,6 +38,7 @@ class Main extends Component{
 		<BrowserRouter>
 			<Switch>
 				<Route exact path="/" component={Login}/>
+				<Route path="/aplicacao" component={Aplicacao} />
 				{rotasPrivada}
 				<Route path="*" component={() => <h1>Page not found</h1>} />
 			</Switch>

@@ -1,5 +1,8 @@
-$cabecalho_cor: #36244a;
+$cabecalho_cor: #913230;
 $laranja1: #76002c;
+/*$cor1: #913230;
+$cor2: #ecaf3a;*/
+
 @mixin fontes{
 	font-family: 'Open Sans', sans-serif;
 	color:#dcdcdc !important;
@@ -7,7 +10,7 @@ $laranja1: #76002c;
 }
 
 .navegacao{
-	height: 70px;
+	height: 60px;
 	background: $cabecalho_cor;
 	.conteudo-nav{
 		

@@ -17,12 +17,9 @@ class Header extends Component{
 		return(
 		<>
 		<Navbar collapseOnSelect expand="lg" style={{background: this.props.fundo}} className="navegacao">
-		  <LinkContainer to="/"><Navbar.Brand><i className="paper plane icon" ></i></Navbar.Brand></LinkContainer>
 		  <Navbar.Toggle aria-controls="responsive-navbar-nav" />
 		  <Navbar.Collapse  id="responsive-navbar-nav" className="conteudo-nav">
 			<Nav  className="mr-auto">
-			  <LinkContainer to="/cadastro"><Nav.Link>Cadastro</Nav.Link></LinkContainer>
-			  {/*<LinkContainer to="/login"><Nav.Link>Entrar</Nav.Link></LinkContainer>*/}
 			  <LinkContainer to="/login"><button className="btn-sair" onClick={()=>this.sair()}>Sair</button></LinkContainer>
 			</Nav>
 		  </Navbar.Collapse>
