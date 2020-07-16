@@ -1,0 +1,213 @@
+$cor1: #913230;
+$cor2: #ecaf3a;
+
+@mixin font-title{
+	/*font-family: 'Liu Jian Mao Cao', cursive;*/
+	font-family: 'Comfortaa', cursive;
+}
+@mixin font-body{
+	font-family: 'Open Sans', sans-serif;
+	
+}
+@mixin inputs{
+	background: #f1f1f1;
+	display: block;
+	width: 100%;
+	height: calc(1.5em + .75rem + 2px);
+	padding: .375rem .75rem;
+	font-size: 1rem;
+	font-weight: 400;
+	line-height: 1.5;
+	color: #495057;
+	background-clip: padding-box;
+	border: 1px solid #ced4da;
+	border-radius: .25rem;
+	transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+	
+	&:focus{
+		border-color:$cor2;
+	}
+}
+
+
+.login{
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content:center;
+	.login-1{
+		background: url("../img/login.jpg");
+		height: 100%;
+		width:50%;
+		background-repeat: no-repeat;
+		background-size: cover;
+		@media only screen and (max-width: 992px) {
+			width:10%;
+		}
+	}
+	.login-2{
+		background: #fff;
+		width:50%;
+		display: flex;
+		align-items: center;
+		justify-content:center;
+		@media only screen and (max-width: 992px) {
+			width:90%;
+		}
+		h1{
+		 @include font-title;
+		 text-align: center;
+		 letter-spacing: 0.168em;
+		 font-size:1.5em;
+		 margin-bottom: 50px;
+		}
+		.login-content{
+			width: 77%;
+			.input-login{
+				border: 1px solid #dcdcdc;
+				height: 45px;
+				width: 210px;
+				color: #383838;
+				padding: 5px 5px 5px 5px;
+				margin-top: 2px;
+				@include font-body;
+			}
+			.botao-login{
+				width: 80%;
+				height: 45px;
+				margin-top: 10px;
+				border: 1px solid $cor1;
+				background: $cor1;
+				color: #fff;
+				border-radius: 5px;
+				@include font-body;
+				font-size:0.9em;
+				font-weight: 600;
+				margin-bottom: 30px;
+				&:hover{
+					background: rgba($cor1, 0.8);
+				}
+			}
+			p{
+				@include font-title;
+				font-size: 1em;
+				a{
+					color: $cor1;
+					&:hover{
+						 text-decoration: underline;
+						 cursor: pointer;
+					}
+				}
+			}
+			h5{
+				text-align: center;
+				@include font-title;
+				margin-top: 20px;
+				&:hover{
+					cursor: pointer;
+					color: $cor1;
+				}
+			}
+		}
+		
+	}
+}
+
+@mixin center{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.cadastro{
+	
+	min-height: 100vh;
+	background-image: linear-gradient( to right, #fff 72%, darken($cor1, 10%) 25%, darken($cor1, 10%) 60%); 
+
+	.conteudo{
+		width: 100%;
+		
+		margin: 0;
+		padding: 20px;
+		h1{
+			 @include font-title;
+			 letter-spacing: 0.168em;
+			 font-size:1.5em;
+			 margin-bottom: 50px;
+			 text-transform: uppercase;
+		}
+		.row{
+			margin-bottom: 20px;
+		}
+		
+		input[type=text]{
+			@include inputs;
+		}
+		input[type=email]{
+			@include inputs;	
+		}
+		input[type=password]{
+			@include inputs;	
+		}
+
+	}
+}
+
+
+.btn{
+	background: $cor2;
+	color: #20232a;
+	min-width: 180px;
+	&:hover{
+		background: darken($cor2, 10%);
+	}
+}
+
+label{
+	color: #20232a;
+	@include font-body;
+}
+
+
+.form-group {
+    position: relative;
+    display: flex;
+    width: 100%;
+    & > span,
+    .form-field {
+        white-space: nowrap;
+        display: block;
+        &:not(:first-child):not(:last-child) {
+            border-radius: 0;
+        }
+        &:first-child {
+            border-radius: 6px 0 0 6px;
+        }
+        &:last-child {
+            border-radius: 0 6px 6px 0;
+        }
+        &:not(:first-child) {
+            margin-left: -1px;
+        }
+    }
+    .form-field {
+        position: relative;
+        z-index: 1;
+        flex: 1 1 auto;
+        width: 1%;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+    & > span {
+        text-align: center;
+        padding: 8px 12px;
+        font-size: 14px;
+        height: calc(1.5em + .75rem + 2px);
+		color: #1c1c1c;
+        border: 1px solid #dfdfdf;
+		background: #e3e3e3;
+		cursor: pointer;
+		transition: background .3s ease, border .3s ease, color .3s ease;
+    }
+    
+}

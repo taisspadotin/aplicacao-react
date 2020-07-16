@@ -1,0 +1,250 @@
+$corFocus: #35bdb2;
+$cor_fundo: #bc5d59;
+@import url('https://fonts.googleapis.com/css?family=Liu+Jian+Mao+Cao|Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap');
+$cor1: #76002c;
+@mixin font-body{
+	font-family: 'Open Sans', sans-serif;
+	
+}
+@mixin foco{
+	box-shadow: 0 0 4px lighten($cor1, 50) !important;
+	border-color:  lighten($cor1, 50) !important;
+}
+
+
+body{
+	margin: 0;
+	background: #fff;	
+}
+
+.geral{
+	padding-top: 20px;
+	margin-left:10%;
+	margin-right:10%;
+	margin-top: 40px;
+	/*margin-bottom: 50px;*/
+	background: #fff;
+	padding-left:20px;
+	padding-right:20px;
+	padding-bottom: 20px;
+	heigth: auto;
+	border-radius: 7px;
+	@media screen and (max-width: 992px) { 
+		margin-left:2%;
+	    margin-right:2%;
+		margin-top: 10px;
+	}
+	box-shadow: 5px 5px 20px rgba(0,0,0,.8);
+	margin-bottom: 40px;
+	.titulo{
+		padding: 30px 10px 10px 10px;
+		border-bottom: 1px solid #dcdcdc;
+		h2{
+			font-family: 'Comfortaa', cursive;
+			text-align: center;
+			text-transform: uppercase;
+			letter-spacing: 0.23em;
+			color: $cor1;
+			font-size: 1.9rem;
+		}
+	}
+}
+body{
+	/*background: #dcdcdc;*/
+}
+
+.conteudo-corpo{
+	/*background: url("img/fundo.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;*/
+
+	background: #092536;
+	min-height: 100vh;
+	
+	/*background: lighten($cor_fundo, 0) ;*/
+	
+}
+
+@mixin input-config{
+	border: 1px solid #dfdfdf;
+	background: #f7f7f7;
+	width: 100%;
+	height: 35px;
+	border-radius: 5px;
+	padding-right: 10px;
+	padding-left: 10px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	@include font-body;
+	color: $cor1;
+}
+
+.form{
+	textarea:focus{
+		@include foco;
+	}
+	textarea{
+		@include input-config;
+		height: 70px;
+	}
+	input{
+		@include input-config;
+	
+	}
+	input:focus{
+		@include foco;
+	}
+	
+	label{
+		@include font-body;
+		font-size: 1.1em;
+		color: #1c1c1c;
+	}
+	
+}
+.paginacao{
+	width: auto;
+	position: relative;
+	a{
+		&:hover{
+			background: rgba($cor1, .5) !important;
+		}
+	}
+	.active{
+		background: rgba($cor1, .3) !important;
+	}
+}
+.ac-input{
+	input{
+		border: 1px solid #8d8d8d50 !important;
+		background: #dadada20 !important;
+		width: 100%;
+		height: 35px !important;
+		border-radius: 5px !important;
+		padding-right: 10px !important;
+		padding-left: 10px !important;
+		padding-top: 10px !important;
+		padding-bottom: 10px !important;
+		@include font-body;
+		color: $cor1 !important;
+	}
+}
+.botao{
+	margin-top: 1px !important;
+	width: 150px;
+	background: $cor1 !important;
+	color: #dcdcdc !important;
+	&:hover{
+		background: lighten($cor1, 10) !important;
+		color: #fff;
+	}
+}
+
+.tabela{
+	tr{
+		&:hover{
+			cursor:pointer;
+			background: rgba($cor1, .2)!important;
+			
+		}	
+		.selected{
+			background: rgba($cor1, .2)!important;
+		}
+	}
+}
+
+
+/*.card{
+	margin-top: 20px;
+	margin-bottom: 10px;
+	.card-header{
+		background: #c8c8c8;
+		color: #000;
+		text-transform: uppercase;
+	}
+	.card-body{
+		border-bottom-right-radius: 5px;
+		border-bottom-left-radius: 5px;
+		background: #f3f3f3;
+		input{
+			background: #fff;
+		}
+
+	}
+}*/
+
+.card{
+	margin-top: 20px;
+	margin-bottom: 10px;
+	/*box-shadow: 8px 10px 20px -13px rgba(153,153,153,1);*/
+	.card-header{
+		/*background: darken(#f7f7f7, 20%);*/
+		background: #602e3a;
+		color: #fff;
+		text-transform: uppercase;
+		i{
+			cursor: pointer;
+			background: rgba(#f7f7f7, .7) !important;
+			border-radius: 30px;
+			width: 25px !important;
+			height: 25px !important;
+			align-self: center;
+			text-align: center;
+			padding-top: 2px;
+
+		}
+	}
+	.card-body{
+		border-bottom-right-radius: 5px;
+		border-bottom-left-radius: 5px;
+		background: #f7f7f7;
+		input{
+			background: #fff;
+		}
+
+	}
+}
+
+.form-group {
+    position: relative;
+    display: flex;
+    width: 100%;
+    & > span,
+    .form-field {
+        white-space: nowrap;
+        display: block;
+        &:not(:first-child):not(:last-child) {
+            border-radius: 0;
+        }
+        &:first-child {
+            border-radius: 6px 0 0 6px;
+        }
+        &:last-child {
+            border-radius: 0 6px 6px 0;
+        }
+        &:not(:first-child) {
+            margin-left: -1px;
+        }
+    }
+    .form-field {
+        position: relative;
+        z-index: 1;
+        flex: 1 1 auto;
+        width: 1%;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+    & > span {
+        text-align: center;
+        padding: 8px 12px;
+        font-size: 14px;
+        height: 35px;
+		color: #1c1c1c;
+        border: 1px solid #dfdfdf;
+		background: #e3e3e3;
+		cursor: pointer;
+		transition: background .3s ease, border .3s ease, color .3s ease;
+    }
+    
+}
