@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import Header from '../components/header';
 import {Row, Col, Modal, Button} from 'react-bootstrap';
 import api from '../services/api';
+import {Table, Pagination, Message} from 'semantic-ui-react';
 
 export default class Aplicacao extends Component{
 	constructor(props){
@@ -16,7 +17,10 @@ export default class Aplicacao extends Component{
 		nameValue: '',
 		modal: false,
 		tituloModal: '',
-		corpoModal: ''
+		corpoModal: '',
+		registros: [],
+		idSelecionado: '',
+		indice: ''
 	};
 	
 	inputChange = event => {
@@ -50,47 +54,128 @@ export default class Aplicacao extends Component{
 		}
 	}
 
-	salvar = async() => {
-		const {idValue, nameValue} = this.state;
-		if(this.validar()){
-			/*fetch('https://jsonplaceholder.typicode.com/posts', {
-		    method: 'POST',
-		    body: JSON.stringify({
-		      title: nameValue,
-		      body: 'bar',
-		      userId: idValue
-		    }),
-		    headers: {
-		      "Content-type": "application/json; charset=UTF-8"
-		    }
-		  })
-		  .then(response => response.json())
-		  .then(json => console.log(json))*/
-		  const resp = await api.post(`/posts`, JSON.stringify({
-		      title: nameValue,
-		      body: 'bar',
-		      userId: idValue
-		    }),{
-					headers:{
-						"Content-type": "application/json; charset=UTF-8"
-					},
-				});
-		console.log(resp);
+	salvar = async () => {
+		const {idValue, nameValue, idSelecionado, indice} = this.state;
+		if(idSelecionado !== ''){
+			this.setState({tituloModal:'Erro', corpoModal:'Esse registro já existe!', modal: true});
+		}
+		else if(this.validar()){
+				const resp = await api.post(`/posts`, JSON.stringify({
+			      title: nameValue,
+			      body: 'bar',
+			      userId: idValue
+			    }),{
+						headers:{
+							"Content-type": "application/json; charset=UTF-8"
+						},
+						});
+				//console.log(resp.data);
+				let d = (resp.data);
+				let registros = this.state.registros;
+				let j = (registros.length)
+				const id = {'indice': j};
+				d = Object.assign(d, id);
+				//console.log(d);
+				
+				
+				
+				registros.push(d);
+				this.setState({registros});
+				this.setState({idValue: '', nameValue:'', idSelecionado:''});
+			
 		}
 
 	}
 
 
-	componentDidMount = async() => {
-		/*fetch('https://jsonplaceholder.typicode.com/posts')
-	  .then((response) => response.json())
-	  .then((json) => console.log(json))*/
-	  const resp = await api.get(`/posts`);
-	  console.log(resp);
+	componentDidMount = async () => {
+		
+	}
+
+	selecionaRegistro = (id, title, i, indice) => {
+		this.setState({idSelecionado: i});
+		this.setState({idValue: id, nameValue: title, indice: i});//como a api simula ate 100 pegamos o contador mais um
+
+	}
+
+	alterar = async () => {
+		const {idSelecionado, indice, nameValue, idValue} = this.state;
+		//console.log(idSelecionado);
+		if(idSelecionado === ''){
+			this.setState({tituloModal:'Erro', corpoModal:'Selecione um registro!', modal: true});
+		}
+		else if(this.validar()){
+			const resp = await api.put(`/posts/${indice+1}`, JSON.stringify({
+		      id: indice,
+		      title: nameValue,
+		      body: 'bar',
+		      userId: idValue
+		    }),{
+					headers: {
+				      "Content-type": "application/json; charset=UTF-8"
+				    }
+				});
+			
+			let registros = this.state.registros;
+			
+			/*registros.forEach(item => {
+			  //if(item.id)
+			  item.name = "Marketplace";
+			});*/
+			
+			this.setState({registros});
+			//this.setState({});
+
+		}
+	}
+
+	excluir = () => {
+		const {idSelecionado} = this.state;
+		if(idSelecionado === ''){
+			this.setState({tituloModal:'Erro', corpoModal:'Selecione um registro!', modal: true});
+		}
+		else{
+			
+		}
+	}
+
+	novo = () => {
+		this.setState({idSelecionado: '', idValue: '', nameValue: ''});
 	}
 
 	render(){
-		const {idValue, nameValue} = this.state;
+		const {idValue, nameValue, registros} = this.state;
+		let dados = '';
+		//console.log(registros.length);
+		if(registros.length < 1){
+			dados = <Message negative style={{textAlign:'center'}}>
+				<Message.Header>Nenhum registro encontrado!</Message.Header>
+				<p>Verifique sua conexão com o banco</p>
+			</Message>;
+		}
+		else{
+			dados = <div>
+				<Table celled fixed singleLine className="tabela">
+					<Table.Header>
+					  <Table.Row>
+						<Table.HeaderCell>ID</Table.HeaderCell>
+						<Table.HeaderCell>Título</Table.HeaderCell>
+					  </Table.Row>
+					</Table.Header>
+				<Table.Body>
+					{registros.map((row, i)=>
+					  <Table.Row key={i} onClick={()=>this.selecionaRegistro(row.userId, row.title, i, row.id)} style={{background: i === this.state.idSelecionado && '#76002c40'}}>
+						<Table.Cell>{row.userId}</Table.Cell>
+						<Table.Cell>{row.title}</Table.Cell>
+					  </Table.Row>
+					)}
+				</Table.Body>
+			  </Table>
+			  <br/>
+				
+			  			  
+			</div>;
+		}
 		return(
 				<div className="aplicacao">
 				<Header/>
@@ -108,10 +193,17 @@ export default class Aplicacao extends Component{
 						<br/>
 						<Row>
 							<Col align="center">
+								<button className="btn" onClick={()=>this.novo()}>Novo</button>
 								<button className="btn" onClick={()=>this.salvar()}>Salvar</button>
+								<button className="btn" onClick={()=>this.alterar()}>Alterar</button>
+								<button className="btn" onClick={()=>this.excluir()}>Excluir</button>
 							</Col>
 						</Row>
+						<br/>
+						{dados}
+						
 					</div>
+
 					<Modal show={this.state.modal} onHide={()=>this.handleClose()}>
 		        <Modal.Header closeButton>
 		          <Modal.Title>{this.state.tituloModal}</Modal.Title>

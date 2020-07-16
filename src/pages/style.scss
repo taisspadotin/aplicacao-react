@@ -158,6 +158,7 @@ $cor2: #ecaf3a;
 	background: $cor2;
 	color: #20232a;
 	min-width: 180px;
+	margin-right: 5px;
 	&:hover{
 		background: darken($cor2, 10%);
 	}
