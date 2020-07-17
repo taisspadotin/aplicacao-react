@@ -78,6 +78,7 @@ export default class Aplicacao extends Component{
 				
 				//let id_image = resp.data.id;
 				let id_image = idValue;
+				if(id_image>0 && id_image<101){
 				const imgResp = await api.get(`/albums/1/photos?id=${id_image}`,{
 						headers:{
 							"Content-type": "application/json; charset=UTF-8"
@@ -86,6 +87,7 @@ export default class Aplicacao extends Component{
 				let imagens = this.state.imagens;
 				imagens.push(imgResp.data[0]);
 				this.setState({imagens});
+				}
 
 				this.setState({idValue: '', nameValue:'', idSelecionado:'', idOriginal:''});
 			
