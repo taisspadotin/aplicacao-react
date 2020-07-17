@@ -112,36 +112,22 @@ class Cadastro extends Component{
 					<div className="conteudo-2">
 						<div className="cadastro-content" align="center">	
 						
-						<Row>
-							<Col>
-								<h1>Cadastre-se</h1>
-							</Col>
-						</Row>
+							<h1>Cadastre-se</h1>
+						
+							<div class="form__group field"  style={{width: '80%'}}>
+								<input type="email" class="form__field" placeholder="email"  placeholder="user@mail.com" ref={this.refEmail} name='emailValue' onChange={this.inputChange} value={emailValue} required='true'/>
+								<label for="email" class="form__label">Email</label>
+							</div>
 
-						<Row>
-							<Col align="left">
-								<label>Email</label>
-								<input type="email" placeholder="user@mail.com" ref={this.refEmail} name='emailValue' onChange={this.inputChange} value={emailValue}/>
-							</Col>
-						</Row>
-
-						<Row>
-							<Col align="left">
-								<label>Senha</label>
-								<div className="form-group">
-									<input type={this.state.type} ref={this.refPassword} name='passwordValue' onChange={this.inputChange} value={passwordValue}/>
-									 {icone}
-								</div>
-							</Col>
-						</Row>
-
-						<Row align="center" style={{marginTop: '50px'}}>
-							<Col>
-								<button className="btn btn-cadastro" onClick={()=>this.salvar()}>
-								Salvar
-								</button>
-							</Col>
-						</Row>
+							<div class="form__group field"  style={{width: '80%'}}>
+								<input class="form__field" placeholder="senha"type={this.state.type} ref={this.refPassword} name='passwordValue' onChange={this.inputChange} value={passwordValue} required='true'/>
+								<label for="senha" class="form__label">Senha</label>
+								{icone}
+							</div>
+						
+							<br/><br/>
+							<button className="btn-init" onClick={()=>this.salvar()}>Salvar</button>
+						
 						</div>
 					</div>
 				</div>

@@ -15,7 +15,7 @@ class Login extends Component{
 		modal: false,
 		tituloModal: '',
 		corpoModal: '',
-		redir: ''
+		redir: false
 	};
 
 	random32bit = () => {
@@ -42,31 +42,20 @@ class Login extends Component{
 		else{
             
         	let dados = this.props.dados;
-        	if(dados[0].email === emailValue && dados[0].password === senhaValue){
-				let token = this.random32bit();
-				realizaLogin(token);
-				let redir = <Redirect to="/aplicacao"/>
-				this.setState({redir});
+        	if(dados[0] !== undefined){
+	        	if(dados[0].email === emailValue && dados[0].password === senhaValue){
+					let token = this.random32bit();
+					realizaLogin(token);
+					//let redir = <Redirect to="/aplicacao"/>
+					this.setState({redir: true});
+
+				}else{
+					this.setState({tituloModal:'Erro', corpoModal:'Dados incorretos!', modal: true});
+				}
 			}
-			/*fetch('https://api-cadastro-cliente.000webhostapp.com/usuarios?login=1', {
-				method: 'POST',
-				body: raw,
-			})
-			.then((response)=>{return response.text()})
-			.then((data)=>{
-				//console.log(data);
-				//console.log(data.mensagem);
-				let resp = JSON.parse(data);
-				if(resp.codigo === 1){
-				this.setState({tituloModal:'Erro', corpoModal:resp.mensagem, modal: true});
-				 realizaLogin(resp.token);
-				 window.location.href = "/";
-				 }
-				else{
-					 this.setState({tituloModal:'Erro', corpoModal:resp.mensagem, modal: true});
-				 }
-			});
-        */
+			else{
+				this.setState({tituloModal:'Erro', corpoModal:'Dados incorretos!', modal: true});
+			}
 		}
 		
 	}
@@ -80,21 +69,33 @@ class Login extends Component{
     handleClose = () => {
 		this.setState({modal: false});
 	}
-
+	
 	render(){
 		const {emailValue, senhaValue, redir} = this.state;
+		let redirecionar = '';
+		if(redir){
+			redirecionar = <Redirect to='/aplicacao' />;
+		}
 		return(
 			<>
-			{redir}
+			{redirecionar}
 				<div className="login">
 					<div className="login-1"></div>
 					<div className="login-2">
 						<div className="login-content" align="center">	
 							<h1>LOGIN</h1>
-							<input className="input-login" type="text" onChange={this.inputChange} name='emailValue' value={emailValue} placeholder="Email"/>
-							<input className="input-login" type="password" placeholder="Senha" onChange={this.inputChange} name="senhaValue" value={senhaValue}/>
+							<div class="form__group field"  style={{width: '80%'}}>
+								<input type="input" class="form__field" placeholder="email"  type="text" onChange={this.inputChange} name='emailValue' value={emailValue} required='true'/>
+								<label for="email" class="form__label">Email</label>
+							</div>
+
+							<div class="form__group field"  style={{width: '80%'}}>
+								<input class="form__field" placeholder="Senha"  type="password" placeholder="Senha" onChange={this.inputChange} name="senhaValue" value={senhaValue} required='true' />
+								<label for="email" class="form__label">Senha</label>
+							</div>
+
 							<br/>
-							<button className="botao-login" type="button" onClick={()=>this.login()}>ENTRAR</button>
+							<button className="btn-init" type="button" onClick={()=>this.login()}>ENTRAR</button>
 							<br/>
 							<p>É novo? <a href="/cadastro">cadastre-se </a></p>
 							<br/>

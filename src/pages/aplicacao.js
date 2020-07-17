@@ -20,7 +20,8 @@ export default class Aplicacao extends Component{
 		corpoModal: '',
 		registros: [],
 		idSelecionado: '',
-		indice: ''
+		idOriginal: '',
+		imagens: []
 	};
 	
 	inputChange = event => {
@@ -55,7 +56,7 @@ export default class Aplicacao extends Component{
 	}
 
 	salvar = async () => {
-		const {idValue, nameValue, idSelecionado, indice} = this.state;
+		const {idValue, nameValue, idSelecionado} = this.state;
 		if(idSelecionado !== ''){
 			this.setState({tituloModal:'Erro', corpoModal:'Esse registro já existe!', modal: true});
 		}
@@ -69,19 +70,12 @@ export default class Aplicacao extends Component{
 							"Content-type": "application/json; charset=UTF-8"
 						},
 						});
-				//console.log(resp.data);
 				let d = (resp.data);
 				let registros = this.state.registros;
-				let j = (registros.length)
-				const id = {'indice': j};
-				d = Object.assign(d, id);
-				//console.log(d);
-				
-				
 				
 				registros.push(d);
 				this.setState({registros});
-				this.setState({idValue: '', nameValue:'', idSelecionado:''});
+				this.setState({idValue: '', nameValue:'', idSelecionado:'', idOriginal:''});
 			
 		}
 
@@ -92,23 +86,22 @@ export default class Aplicacao extends Component{
 		
 	}
 
-	selecionaRegistro = (id, title, i, indice) => {
+	selecionaRegistro = (id, title, i, idOriginal) => {
 		this.setState({idSelecionado: i});
-		this.setState({idValue: id, nameValue: title, indice: i});//como a api simula ate 100 pegamos o contador mais um
+		this.setState({idValue: id, nameValue: title, idOriginal:idOriginal});
 
 	}
 
 	alterar = async () => {
-		const {idSelecionado, indice, nameValue, idValue} = this.state;
-		//console.log(idSelecionado);
+		const {idSelecionado, indice, nameValue, idValue, idOriginal} = this.state;
 		if(idSelecionado === ''){
 			this.setState({tituloModal:'Erro', corpoModal:'Selecione um registro!', modal: true});
 		}
 		else if(this.validar()){
-			const resp = await api.put(`/posts/${indice+1}`, JSON.stringify({
+			const resp = await api.put(`/posts/${idOriginal}`, JSON.stringify({
 		      id: indice,
 		      title: nameValue,
-		      body: 'bar',
+		      body: '',
 		      userId: idValue
 		    }),{
 					headers: {
@@ -118,24 +111,32 @@ export default class Aplicacao extends Component{
 			
 			let registros = this.state.registros;
 			
-			/*registros.forEach(item => {
-			  //if(item.id)
-			  item.name = "Marketplace";
-			});*/
+			for(let i=0; i<registros.length; i++){
+				if(resp.data.id === registros[i].id){
+					registros[i].title =  resp.data.title;
+					registros[i].userId =  resp.data.userId;
+				}
+			}
 			
 			this.setState({registros});
-			//this.setState({});
-
+			
 		}
 	}
 
-	excluir = () => {
-		const {idSelecionado} = this.state;
+	excluir = async () => {
+		const {idSelecionado, idOriginal} = this.state;
+
 		if(idSelecionado === ''){
 			this.setState({tituloModal:'Erro', corpoModal:'Selecione um registro!', modal: true});
 		}
 		else{
-			
+			const resp = await api.delete(`/posts/${idOriginal}`);
+			let registros = this.state.registros;
+			this.state.registros.splice(idSelecionado, 1);
+    		
+    		this.setState([...this.state.registros]);
+			this.setState({idSelecionado: '', idOriginal:'', nameValue: '', idValue:''});
+				
 		}
 	}
 
@@ -144,9 +145,8 @@ export default class Aplicacao extends Component{
 	}
 
 	render(){
-		const {idValue, nameValue, registros} = this.state;
+		const {idValue, nameValue, registros, idSelecionado, imagens} = this.state;
 		let dados = '';
-		//console.log(registros.length);
 		if(registros.length < 1){
 			dados = <Message negative style={{textAlign:'center'}}>
 				<Message.Header>Nenhum registro encontrado!</Message.Header>
@@ -176,6 +176,7 @@ export default class Aplicacao extends Component{
 			  			  
 			</div>;
 		}
+
 		return(
 				<div className="aplicacao">
 				<Header/>
@@ -183,26 +184,35 @@ export default class Aplicacao extends Component{
 						
 						<Row>
 							<Col>
-								<label>ID:</label>		
-								<input type="text" ref={this.refId} name='idValue' onChange={this.inputChange} value={idValue}/>
+								<div class="form__group field">
+									<input type="text" class="form__field" placeholder="ID" ref={this.refId} name='idValue' onChange={this.inputChange} value={idValue} required='true'/>
+									<label for="idValue" class="form__label">ID</label>
+								</div>
 							</Col>
+							
 							<Col>
-								<label>Título:</label>		
-								<input type="text" ref={this.refName} name='nameValue' onChange={this.inputChange} value={nameValue}/>
+								<div class="form__group field">
+									<input type="text" class="form__field" placeholder="Título"ref={this.refName} name='nameValue' onChange={this.inputChange} value={nameValue} required='true'/>
+									<label for="nameValue" class="form__label">Título</label>
+								</div>
 							</Col>
 						</Row>
 						<br/>
 						<Row className="mt-4">
 							<Col align="center">
 								<button className="btn" onClick={()=>this.novo()}>Novo</button>
-								<button className="btn" onClick={()=>this.salvar()}>Salvar</button>
-								<button className="btn" onClick={()=>this.alterar()}>Alterar</button>
-								<button className="btn" onClick={()=>this.excluir()}>Excluir</button>
+								<button className="btn" onClick={()=>this.salvar()} style={{background: idSelecionado !== '' && '#a8a4a3'}}>Salvar</button>
+								<button className="btn" onClick={()=>this.alterar()} style={{background: idSelecionado === '' && '#a8a4a3'}}>Alterar</button>
+								<button className="btn" onClick={()=>this.excluir()} style={{background: idSelecionado === '' && '#a8a4a3'}}>Excluir</button>
 							</Col>
 						</Row>
 						<br/><br/>
 						{dados}
-						
+						{registros.length>0 &&
+							<div className="image">
+							a
+							</div>
+						}
 					</div>
 
 					<Modal show={this.state.modal} onHide={()=>this.handleClose()}>

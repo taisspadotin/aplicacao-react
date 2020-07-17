@@ -1,5 +1,4 @@
 $cor1: #913230;
-$cor2: #66add7;
 
 @mixin font-title{
 	/*font-family: 'Liu Jian Mao Cao', cursive;*/
@@ -9,26 +8,6 @@ $cor2: #66add7;
 	font-family: 'Open Sans', sans-serif;
 	
 }
-@mixin inputs{
-	background: #f1f1f1;
-	display: block;
-	width: 100%;
-	height: calc(1.5em + .75rem + 2px);
-	padding: .375rem .75rem;
-	font-size: 1rem;
-	font-weight: 400;
-	line-height: 1.5;
-	color: #495057;
-	background-clip: padding-box;
-	border: 1px solid #ced4da;
-	border-radius: .25rem;
-	transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-	
-	&:focus{
-		border-color:$cor2;
-	}
-}
-
 
 .login{
 	height: 100vh;
@@ -72,22 +51,7 @@ $cor2: #66add7;
 				margin-top: 2px;
 				@include font-body;
 			}
-			.botao-login{
-				width: 80%;
-				height: 45px;
-				margin-top: 10px;
-				border: 1px solid $cor1;
-				background: $cor1;
-				color: #fff;
-				border-radius: 5px;
-				@include font-body;
-				font-size:0.9em;
-				font-weight: 600;
-				margin-bottom: 30px;
-				&:hover{
-					background: rgba($cor1, 0.8);
-				}
-			}
+			
 			p{
 				@include font-title;
 				font-size: 1em;
@@ -118,12 +82,12 @@ $cor2: #66add7;
 	align-items: center;
 	justify-content: center;
 }
-
+.center{
+	@include center;
+}
 .cadastro{
 	
 	min-height: 100vh;
-	/*background-image: linear-gradient( to right, #fff 72%, darken($cor1, 10%) 25%, darken($cor1, 10%) 60%); */
-
 	height: 100vh;
 	display: flex;
 	.conteudo{
@@ -166,7 +130,7 @@ $cor2: #66add7;
 		}
 		.cadastro-content{
 			width: 77%;
-				
+
 		}
 
 		h1{
@@ -180,28 +144,19 @@ $cor2: #66add7;
 			margin-bottom: 20px;
 		}
 		
-		input[type=text]{
-			@include inputs;
-		}
-		input[type=email]{
-			@include inputs;	
-		}
-		input[type=password]{
-			@include inputs;	
-		}
-
 	}
 }
 
 
 .btn{
-	background: $cor2;
-	color: #20232a;
+	background: $cor1;
+	color: #f1f1f1;
 	min-width: 180px;
 	margin-right: 5px;
 	margin-top: 5px;
 	&:hover{
-		background: darken($cor2, 10%);
+		background: darken($cor1, 10%);
+		color: #fff;
 	}
 }
 
@@ -263,7 +218,7 @@ label{
 		padding: 20px;
 		padding-left: 60px;
 		padding-right: 60px;
-		background-image: linear-gradient( to right, #fff 72%, lighten($cor2, 30%) 25%, lighten($cor2, 30%) 60%); 
+		/*background-image: linear-gradient( to right, #fff 72%, rgba($cor1, .3) 25%, rgba($cor1, .3) 60%); */
 		@media only screen and (max-width: 992px) {
 			padding-left: 10px;
 			padding-right: 10px;
@@ -274,14 +229,90 @@ label{
 		 font-size:1.5em;
 		 margin-bottom: 50px;
 		}
-		input[type=text]{
-			@include inputs;
-		}
-		input[type=email]{
-			@include inputs;	
-		}
-		input[type=password]{
-			@include inputs;	
-		}
+		
+		.image{
+			background: #f1f1f1;
+			width: 100%;
+			border-radius: 5px;
+
+		}	
 	}	
 }
+
+$gray: #000;
+.form__group {
+  position: relative;
+  padding: 15px 0 0;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.form__field {
+  font-family: inherit;
+  width: 100%;
+  border: 0;
+  border-bottom: 2px solid $gray;
+  outline: 0;
+  font-size: 1rem;
+  color: darken($cor1, 90%);
+  padding: 7px 0;
+  background: transparent;
+  transition: border-color 0.2s;
+
+  &::placeholder {
+    color: transparent;
+  }
+
+  &:placeholder-shown ~ .form__label {
+    font-size: 1.1rem;
+    cursor: text;
+    top: 20px;
+  }
+}
+
+.form__label {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 1rem;
+  color: $gray;
+}
+
+.form__field:focus {
+  ~ .form__label {
+    position: absolute;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 1rem;
+    color: $cor1;
+    font-weight:500;    
+  }
+  padding-bottom: 6px;  
+  font-weight: 700;
+  border-width: 2px;
+  border-image: linear-gradient(to right, $cor1,lighten($cor1, 20%));
+  border-image-slice: 1;
+}
+/* reset input */
+.form__field{
+  &:required,&:invalid { box-shadow:none; }
+}
+
+.btn-init{
+				width: 80%;
+				height: 45px;
+				margin-top: 10px;
+				border: 1px solid $cor1;
+				background: $cor1;
+				color: #fff;
+				border-radius: 5px;
+				@include font-body;
+				font-size:0.9em;
+				font-weight: 600;
+				margin-bottom: 30px;
+				&:hover{
+					background: rgba($cor1, 0.8);
+				}
+			}
