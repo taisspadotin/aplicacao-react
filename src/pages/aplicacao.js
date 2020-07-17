@@ -77,7 +77,7 @@ export default class Aplicacao extends Component{
 				this.setState({registros});
 				
 				//let id_image = resp.data.id;
-				let id_image = registros.length;
+				let id_image = idValue;
 				const imgResp = await api.get(`/albums/1/photos?id=${id_image}`,{
 						headers:{
 							"Content-type": "application/json; charset=UTF-8"

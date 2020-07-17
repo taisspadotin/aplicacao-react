@@ -246,7 +246,8 @@ label{
 				padding: 0;
 				height: 150px;
 				@media only screen and (max-width: 600px) {
-					height: 50px;
+					max-width: 100%;	
+				flex-basis: 100%;
 				}
 
 			}

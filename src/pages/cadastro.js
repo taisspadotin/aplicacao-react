@@ -4,7 +4,7 @@ import {Icon} from 'semantic-ui-react';
 import {Redirect} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { clickButton, showTable, GuardaDados} from '../actions';
+import {GuardaDados} from '../actions';
 
 class Cadastro extends Component{
 	constructor(props){
@@ -77,7 +77,6 @@ class Cadastro extends Component{
 			var joined = this.props.dados.concat(data);
 			this.props.GuardaDados(joined);
 			
-			this.props.showTable(true);
 			
 			let rd = <Redirect to="/"/>;
 			this.setState({rd});
@@ -145,13 +144,11 @@ class Cadastro extends Component{
 
 
 const mapStateToProps = store => ({
-  newValue: store.clickState.newValue,
-  showTb:   store.TableState.showTb,
   dados:    store.TableState.dados
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ clickButton, showTable, GuardaDados}, dispatch);
+  bindActionCreators({GuardaDados}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cadastro);
 //export default Cadastro;

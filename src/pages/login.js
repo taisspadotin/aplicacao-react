@@ -5,7 +5,7 @@ import { realizaLogin } from "../services/auth";
 import {Modal, Button} from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { clickButton, showTable, GuardaDados} from '../actions';
+import {GuardaDados} from '../actions';
 import {Redirect} from 'react-router-dom';
 
 class Login extends Component{
@@ -110,12 +110,10 @@ class Login extends Component{
 }
 
 const mapStateToProps = store => ({
-  newValue: store.clickState.newValue,
-  showTb:   store.TableState.showTb,
   dados:    store.TableState.dados
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ clickButton, showTable, GuardaDados}, dispatch);
+  bindActionCreators({GuardaDados}, dispatch);
   
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
