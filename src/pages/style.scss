@@ -234,7 +234,22 @@ label{
 			background: #f1f1f1;
 			width: 100%;
 			border-radius: 5px;
+			padding: 5px;
+			display: flex;
+			-ms-flex-wrap: wrap;
+			flex-wrap: wrap;
+			.pic{
+				margin-right: 5px;
+				max-width: 15%;	
+				flex-basis: 15%;
+				margin-bottom: 5px;
+				padding: 0;
+				height: 150px;
+				@media only screen and (max-width: 600px) {
+					height: 50px;
+				}
 
+			}
 		}	
 	}	
 }

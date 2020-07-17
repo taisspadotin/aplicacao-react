@@ -2,7 +2,7 @@ import React,{Component} from 'react';
 import Header from '../components/header';
 import {Row, Col, Modal, Button} from 'react-bootstrap';
 import api from '../services/api';
-import {Table, Pagination, Message} from 'semantic-ui-react';
+import {Table, Message} from 'semantic-ui-react';
 
 export default class Aplicacao extends Component{
 	constructor(props){
@@ -75,6 +75,18 @@ export default class Aplicacao extends Component{
 				
 				registros.push(d);
 				this.setState({registros});
+				
+				//let id_image = resp.data.id;
+				let id_image = registros.length;
+				const imgResp = await api.get(`/albums/1/photos?id=${id_image}`,{
+						headers:{
+							"Content-type": "application/json; charset=UTF-8"
+						},
+				});
+				let imagens = this.state.imagens;
+				imagens.push(imgResp.data[0]);
+				this.setState({imagens});
+
 				this.setState({idValue: '', nameValue:'', idSelecionado:'', idOriginal:''});
 			
 		}
@@ -110,9 +122,9 @@ export default class Aplicacao extends Component{
 				});
 			
 			let registros = this.state.registros;
-			
+			let id = resp.data.id;
 			for(let i=0; i<registros.length; i++){
-				if(resp.data.id === registros[i].id){
+				if(id === registros[i].id){
 					registros[i].title =  resp.data.title;
 					registros[i].userId =  resp.data.userId;
 				}
@@ -133,8 +145,13 @@ export default class Aplicacao extends Component{
 			const resp = await api.delete(`/posts/${idOriginal}`);
 			let registros = this.state.registros;
 			this.state.registros.splice(idSelecionado, 1);
-    		
     		this.setState([...this.state.registros]);
+			
+			//const respImg = await api.delete(`/albums/1/photos/${idOriginal}`);
+			let imagens = this.state.imagens;
+			this.state.imagens.splice(idSelecionado, 1);
+    		this.setState([...this.state.imagens]);
+			
 			this.setState({idSelecionado: '', idOriginal:'', nameValue: '', idValue:''});
 				
 		}
@@ -176,6 +193,16 @@ export default class Aplicacao extends Component{
 			  			  
 			</div>;
 		}
+		let img = '';
+		if(imagens.length > 0){
+			img = <div className="image">
+					{imagens.map((row, i)=>
+						<div className="pic"  key={i}>
+							<img src={row.thumbnailUrl}/>
+						</div>
+					)}
+					</div>; 
+		}
 
 		return(
 				<div className="aplicacao">
@@ -184,16 +211,16 @@ export default class Aplicacao extends Component{
 						
 						<Row>
 							<Col>
-								<div class="form__group field">
-									<input type="text" class="form__field" placeholder="ID" ref={this.refId} name='idValue' onChange={this.inputChange} value={idValue} required='true'/>
-									<label for="idValue" class="form__label">ID</label>
+								<div className="form__group field">
+									<input type="text" className="form__field" placeholder="ID" ref={this.refId} name='idValue' onChange={this.inputChange} value={idValue} required={true}/>
+									<label htmlFor="idValue" className="form__label">ID</label>
 								</div>
 							</Col>
 							
 							<Col>
-								<div class="form__group field">
-									<input type="text" class="form__field" placeholder="Título"ref={this.refName} name='nameValue' onChange={this.inputChange} value={nameValue} required='true'/>
-									<label for="nameValue" class="form__label">Título</label>
+								<div className="form__group field">
+									<input type="text" className="form__field" placeholder="Título"ref={this.refName} name='nameValue' onChange={this.inputChange} value={nameValue} required={true}/>
+									<label htmlFor="nameValue" className="form__label">Título</label>
 								</div>
 							</Col>
 						</Row>
@@ -208,11 +235,7 @@ export default class Aplicacao extends Component{
 						</Row>
 						<br/><br/>
 						{dados}
-						{registros.length>0 &&
-							<div className="image">
-							a
-							</div>
-						}
+						{img}
 					</div>
 
 					<Modal show={this.state.modal} onHide={()=>this.handleClose()}>

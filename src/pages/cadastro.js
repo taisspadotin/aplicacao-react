@@ -1,8 +1,7 @@
 import React ,{ Component} from 'react';
-import Header from '../components/header';
-import {Row, Col, Modal, Button} from 'react-bootstrap';
+import {Modal, Button} from 'react-bootstrap';
 import {Icon} from 'semantic-ui-react';
-import {Link, Redirect} from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { clickButton, showTable, GuardaDados} from '../actions';
@@ -74,16 +73,11 @@ class Cadastro extends Component{
 			info['email'] = emailValue;
 			info['password'] = passwordValue;
 			data.push(info);
-			/*var joined = this.state.valores.concat(data);
-			this.setState({valores: joined});*/
 			
 			var joined = this.props.dados.concat(data);
 			this.props.GuardaDados(joined);
 			
-			//console.log(this.state.valores);
 			this.props.showTable(true);
-			//console.log(this.state.valores);
-			//this.props.showTable(true);
 			
 			let rd = <Redirect to="/"/>;
 			this.setState({rd});
@@ -114,14 +108,14 @@ class Cadastro extends Component{
 						
 							<h1>Cadastre-se</h1>
 						
-							<div class="form__group field"  style={{width: '80%'}}>
-								<input type="email" class="form__field" placeholder="email"  placeholder="user@mail.com" ref={this.refEmail} name='emailValue' onChange={this.inputChange} value={emailValue} required='true'/>
-								<label for="email" class="form__label">Email</label>
+							<div className="form__group field"  style={{width: '80%'}}>
+								<input type="email" className="form__field" placeholder="email" ref={this.refEmail} name='emailValue' onChange={this.inputChange} value={emailValue} required={true}/>
+								<label htmlFor="emailValue" className="form__label">Email</label>
 							</div>
 
-							<div class="form__group field"  style={{width: '80%'}}>
-								<input class="form__field" placeholder="senha"type={this.state.type} ref={this.refPassword} name='passwordValue' onChange={this.inputChange} value={passwordValue} required='true'/>
-								<label for="senha" class="form__label">Senha</label>
+							<div className="form__group field"  style={{width: '80%'}}>
+								<input className="form__field" placeholder="senha"type={this.state.type} ref={this.refPassword} name='passwordValue' onChange={this.inputChange} value={passwordValue} required={true}/>
+								<label htmlFor="passwordValue" className="form__label">Senha</label>
 								{icone}
 							</div>
 						

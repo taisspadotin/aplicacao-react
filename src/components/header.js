@@ -3,7 +3,6 @@ import './style.scss';
 import {Navbar, Nav} from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { logout } from "../services/auth";
-import {Route} from 'react-router-dom';
 
 class Header extends Component{
 	state = {}

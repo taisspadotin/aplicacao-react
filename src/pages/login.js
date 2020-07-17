@@ -15,7 +15,7 @@ class Login extends Component{
 		modal: false,
 		tituloModal: '',
 		corpoModal: '',
-		redir: false
+		redir: ''
 	};
 
 	random32bit = () => {
@@ -27,11 +27,6 @@ class Login extends Component{
 
 	login = () =>{
 		const {emailValue, senhaValue} = this.state;
-
-		const enviar = {
-			email: this.state.emailValue,
-			senha: this.state.senhaValue
-		};
 		
 		if(emailValue === ''){
 			this.setState({tituloModal:'Erro', corpoModal:'Preencha o email', modal: true});
@@ -46,9 +41,8 @@ class Login extends Component{
 	        	if(dados[0].email === emailValue && dados[0].password === senhaValue){
 					let token = this.random32bit();
 					realizaLogin(token);
-					//let redir = <Redirect to="/aplicacao"/>
-					this.setState({redir: true});
-
+					window.location.href = '/aplicacao';
+					
 				}else{
 					this.setState({tituloModal:'Erro', corpoModal:'Dados incorretos!', modal: true});
 				}
@@ -71,27 +65,23 @@ class Login extends Component{
 	}
 	
 	render(){
-		const {emailValue, senhaValue, redir} = this.state;
-		let redirecionar = '';
-		if(redir){
-			redirecionar = <Redirect to='/aplicacao' />;
-		}
+		const {emailValue, senhaValue} = this.state;
+
 		return(
 			<>
-			{redirecionar}
 				<div className="login">
 					<div className="login-1"></div>
 					<div className="login-2">
 						<div className="login-content" align="center">	
 							<h1>LOGIN</h1>
-							<div class="form__group field"  style={{width: '80%'}}>
-								<input type="input" class="form__field" placeholder="email"  type="text" onChange={this.inputChange} name='emailValue' value={emailValue} required='true'/>
-								<label for="email" class="form__label">Email</label>
+							<div className="form__group field"  style={{width: '80%'}}>
+								<input className="form__field" placeholder="email" type="text" onChange={this.inputChange} name='emailValue' value={emailValue} required={true}/>
+								<label htmlFor="emailValue" className="form__label">Email</label>
 							</div>
 
-							<div class="form__group field"  style={{width: '80%'}}>
-								<input class="form__field" placeholder="Senha"  type="password" placeholder="Senha" onChange={this.inputChange} name="senhaValue" value={senhaValue} required='true' />
-								<label for="email" class="form__label">Senha</label>
+							<div className="form__group field"  style={{width: '80%'}}>
+								<input className="form__field" type="password" placeholder="Senha" onChange={this.inputChange} name="senhaValue" value={senhaValue} required={true}/>
+								<label htmlFor="senhaValue" className="form__label">Senha</label>
 							</div>
 
 							<br/>
